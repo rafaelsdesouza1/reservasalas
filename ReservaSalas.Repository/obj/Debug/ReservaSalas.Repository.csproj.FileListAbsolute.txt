@@ -1,0 +1,9 @@
+C:\Users\rafae\source\repos\ReservaSalas\ReservaSalas.Repository\bin\Debug\ReservaSalas.Repository.dll
+C:\Users\rafae\source\repos\ReservaSalas\ReservaSalas.Repository\bin\Debug\ReservaSalas.Repository.pdb
+C:\Users\rafae\source\repos\ReservaSalas\ReservaSalas.Repository\bin\Debug\ReservaSalas.Domain.dll
+C:\Users\rafae\source\repos\ReservaSalas\ReservaSalas.Repository\bin\Debug\ReservaSalas.Domain.pdb
+C:\Users\rafae\source\repos\ReservaSalas\ReservaSalas.Repository\obj\Debug\ReservaSalas.Repository.csprojAssemblyReference.cache
+C:\Users\rafae\source\repos\ReservaSalas\ReservaSalas.Repository\obj\Debug\ReservaSalas.Repository.csproj.CoreCompileInputs.cache
+C:\Users\rafae\source\repos\ReservaSalas\ReservaSalas.Repository\obj\Debug\ReservaSalas.Repository.csproj.CopyComplete
+C:\Users\rafae\source\repos\ReservaSalas\ReservaSalas.Repository\obj\Debug\ReservaSalas.Repository.dll
+C:\Users\rafae\source\repos\ReservaSalas\ReservaSalas.Repository\obj\Debug\ReservaSalas.Repository.pdb
