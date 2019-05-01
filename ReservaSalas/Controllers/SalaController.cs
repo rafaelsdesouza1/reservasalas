@@ -2,8 +2,6 @@
 using ReservaSalas.Models;
 using ReservaSalas.Repository.DAO;
 using System;
-using System.Data;
-using System.Linq;
 using System.Web.Http;
 using System.Web.Http.Cors;
 
@@ -44,22 +42,6 @@ namespace ReservaSalas.Controllers
             }
         }
 
-        [HttpGet]
-        [Route(@"RecuperarSalaPorData/{data:regex({0-9}{4}\-{0-9}{2})}/{id:int}")]
-        public IHttpActionResult ListarSalasPorData(string data)
-        {
-            try
-            {
-                SalaDAO salaDAO = new SalaDAO();
-                //List<Sala> lstSalas = ListarSalas1().Where(x => x.data == data).ToList();
-                return Ok(salaDAO.ListarSalas());
-            }
-            catch (Exception ex)
-            {
-                return InternalServerError(ex);
-            }
-        }
-
         // GET: api/Sala/5
         [HttpGet]
         [Route("RecuperarSala/{id:int}")]
@@ -70,11 +52,19 @@ namespace ReservaSalas.Controllers
         }
 
         [HttpGet]
-        [Route(@"RecuperarSalaPorData/{data:regex({0-9}{4}\-{0-9}{2})}/{id:int}")]
-        public SalaDTO RecuperarSalaPorData(int id)
+        [Route("ListarSalaPorLocal/{id:int}")]
+        public IHttpActionResult ListarSalaPorLocal(int id)
         {
-            SalaDAO salaDAO = new SalaDAO();
-            return salaDAO.ListarSalas().Where(x => x.Id == id).FirstOrDefault();
+            try
+            {
+                SalaDAO salaDAO = new SalaDAO();
+                return Ok(salaDAO.ListarSalaPorLocal(id));
+            }
+            catch (Exception ex)
+            {
+                return InternalServerError(ex);
+            }
+            
         }
 
         // PUT: api/Sala/5

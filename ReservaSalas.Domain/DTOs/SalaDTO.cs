@@ -12,5 +12,7 @@ namespace ReservaSalas.Domain.DTOs
 
         //[Required(ErrorMessage = "O campo Local é obrigatório.")]
         public int LocalId { get; set; }
+
+        public virtual LocalDTO Local { get; set; }
     }
 }

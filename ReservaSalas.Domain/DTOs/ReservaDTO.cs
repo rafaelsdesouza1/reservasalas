@@ -2,7 +2,7 @@
 
 namespace ReservaSalas.Domain.DTOs
 {
-    class ReservaDTO
+    public class ReservaDTO
     {
         public int Id { get; set; }
 
@@ -13,5 +13,7 @@ namespace ReservaSalas.Domain.DTOs
         public DateTime DataFim { get; set; }
 
         public int SalaId { get; set; }
+
+        public virtual SalaDTO Sala { get; set; }
     }
 }

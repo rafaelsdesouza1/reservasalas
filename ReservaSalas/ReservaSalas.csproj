@@ -123,6 +123,8 @@
     <Compile Include="App_Start\SwaggerConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="BaseUsuario.cs" />
+    <Compile Include="Controllers\LocalController.cs" />
+    <Compile Include="Controllers\ReservaController.cs" />
     <Compile Include="Controllers\SalaController.cs" />
     <Compile Include="Models\LocalModel.cs" />
     <Compile Include="Models\ReservaModel.cs" />

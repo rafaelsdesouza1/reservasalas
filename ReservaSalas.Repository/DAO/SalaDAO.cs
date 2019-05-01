@@ -30,11 +30,35 @@ namespace ReservaSalas.Repository.DAO
 
                 while (res.Read())
                 {
+                    LocalDTO lc = new LocalDTO();
+                    LocalDAO lDAO = new LocalDAO();
+                    int LocalId = 0;
+
+                    if (res["LocalId"] != DBNull.Value)
+                        LocalId = Convert.ToInt32(res["LocalId"]);
+
+                    lc = lDAO.ListarLocal(LocalId);
                     var sala = new SalaDTO
                     {
                         Id = Convert.ToInt32(res["Id"]),
-                        Nome = Convert.ToString(res["Nome"])
+                        Nome = Convert.ToString(res["Nome"]),
+                        LocalId = 0
                     };
+
+                    if (lc != null)
+                    {
+                        sala = new SalaDTO
+                        {
+                            Id = Convert.ToInt32(res["Id"]),
+                            Nome = Convert.ToString(res["Nome"]),
+                            LocalId = LocalId,
+                            Local = new LocalDTO
+                            {
+                                Id = LocalId,
+                                Nome = lc.Nome
+                            }
+                        };
+                    }
 
                     lstSalas.Add(sala);
                 }
@@ -59,6 +83,35 @@ namespace ReservaSalas.Repository.DAO
             {
                 IDbCommand command = conn.CreateCommand();
                 command.CommandText = $"select * from salas where Id = {Id}";
+
+                IDataReader res = command.ExecuteReader();
+
+                while (res.Read())
+                {
+                    sala.Id = Convert.ToInt32(res["Id"]);
+                    sala.Nome = Convert.ToString(res["Nome"]);
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+            finally
+            {
+                conn.Close();
+            }
+
+            return sala;
+        }
+
+        public SalaDTO ListarSalaPorLocal(int LocalId)
+        {
+            var sala = new SalaDTO();
+
+            try
+            {
+                IDbCommand command = conn.CreateCommand();
+                command.CommandText = $"select * from salas where LocalId = {LocalId}";
 
                 IDataReader res = command.ExecuteReader();
 

@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Cadastro de Local</title>
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="styles/style.css" rel="stylesheet">
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+        <a class="navbar-brand" href="#">LabTrans</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse"
+            aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="index.html">Home <span class="sr-only"></span></a>
+                </li>
+                <li class="nav-item active">
+                    <a class="nav-link" href="local.html">Locais <span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="sala.html">Salas <span class="sr-only"></span></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="reservasala.html">Reserva de Salas <span class="sr-only"></span></a>
+                </li>
+            </ul>
+        </div>
+        <div class="collapse navbar-collapse navbar-right" id="navbarCollapse">
+            <ul class="navbar-nav mr-auto" id="statusLogin">
+
+            </ul>
+        </div>
+    </nav>
+    <div class="container topPage">
+        <div id="cabecalhoCadastro">
+            <h2>Cadastro de Local</h2>
+            <button type="button" class="btn btn-primary pull-right" onclick="NovoLocal();">Cadastrar</button>
+        </div>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <td>Nome</td>
+                    <td></td>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+    </div>
+    <!-- cadastrarModalLocal -->
+    <div class="modal fade" id="cadastrarModalLocal" tabindex="-1" role="dialog" aria-labelledby="cadastrarModalLocalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="cadastrarModalLocalLabel">Cadastrar Local</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group"><label>Nome:</label><input type="text" id="Nome" class="form-control" />
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button id="btnSalvar" class="btn btn-success" onclick="CadastrarLocal()"
+                        data-dismiss="modal">Cadastrar</button>
+                    <button id="btnCancelar" class="btn btn-warning" onclick="CancelarLocal()">Cancelar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- salvarModalLocal -->
+    <div class="modal fade" id="salvarModalLocal" tabindex="-1" role="dialog" aria-labelledby="salvarModalLocalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="salvarModalLocalLabel">Cadastrar Local</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    "Nome é obrigatório!"
+                </div>
+                <div class="modal-footer">
+                    <button id="btnCancelar" class="btn btn-warning" onclick="NovoLocal();">OK</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- msgModalLocal -->
+    <div class="modal fade" id="msgModalLocal" tabindex="-1" role="dialog" aria-labelledby="msgModalLocalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="msgModalLocalLabel">Editar Local</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                        <h6 class="modal-dialog" id="msgModalLocalText"></h6>
+                </div>
+                <div class="modal-footer">
+                    <button id="btnCancelar" class="btn btn-warning" data-dismiss="modal">OK</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- excluirModalLocal -->
+    <div class="modal fade" id="excluirModalLocal" tabindex="-1" role="dialog" aria-labelledby="excluirModalLocalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="excluirModalLocalLabel">Excluir Local</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <h6 class="modal-dialog" id="msgExlcuirModalLabel"></h6>
+                </div>
+                <div class="modal-footer">
+                    <button id="btnSalvar" class="btn btn-success" onclick="ConfirmarExlcusaoLocal()"
+                        data-dismiss="modal">Excluir</button>
+                    <button id="btnCancelar" class="btn btn-warning" onclick="CancelarExclusaoLocal()">Cancelar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript" src="scripts/scriptLocal.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script>
+        (() => {
+            var statusLogin = document.querySelector("#statusLogin");
+
+            if (sessionStorage.getItem('token') != null) {
+                statusLogin.innerHTML = `<li class="nav-item active">
+          <a class="nav-link" href="#" onclick="logout()">Sair <span class="sr-only">(current)</span></a>
+        </li>`;
+            } else {
+                statusLogin.innerHTML = `<li class="nav-item active">
+          <a class="nav-link" href="login.html">Entrar <span class="sr-only">(current)</span></a>
+        </li>`;
+
+                window.location.href = "login.html";
+            }
+        })()
+
+        function logout() {
+            sessionStorage.removeItem('token');
+            window.location.href = "login.html";
+        }
+    </script>
+</body>
+
+</html>

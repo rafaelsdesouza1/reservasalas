@@ -1,0 +1,170 @@
+﻿<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Cadastro de Sala</title>
+  <link href="css/bootstrap.min.css" rel="stylesheet">
+  <link href="styles/style.css" rel="stylesheet">
+</head>
+
+<body>
+  <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+    <a class="navbar-brand" href="#">LabTrans</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse"
+      aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarCollapse">
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item">
+          <a class="nav-link" href="index.html">Home <span class="sr-only"></span></a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="local.html">Locais <span class="sr-only"></span></a>
+        </li>
+        <li class="nav-item active">
+          <a class="nav-link" href="sala.html">Salas <span class="sr-only">(current)</span></a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="reservasala.html">Reserva de Salas <span class="sr-only"></span></a>
+        </li>
+      </ul>
+    </div>
+    <div class="collapse navbar-collapse navbar-right" id="navbarCollapse">
+      <ul class="navbar-nav mr-auto" id="statusLogin">
+
+      </ul>
+    </div>
+  </nav>
+  <div class="container topPage">
+    <div id="cabecalhoCadastro">
+      <h2>Cadastro de Sala</h2>
+      <button type="button" class="btn btn-primary pull-right" onclick="NovaSala();">Cadastrar</button>
+    </div>
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <td>Local/Filial</td>
+          <td>Nome</td>
+          <td></td>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+  </div>
+  <!-- cadastrarModalSala -->
+  <div class="modal fade" id="cadastrarModalSala" tabindex="-1" role="dialog" aria-labelledby="cadastrarModalSalaLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="cadastrarModalSalaLabel">Cadastrar Sala</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+            <div class="form-group"><label>Local/Filial:</label><select id="LocalId" class="form-control"></select></div>
+          <div class="form-group"><label>Nome:</label><input type="text" id="Nome" class="form-control" /></div>
+        </div>
+        <div class="modal-footer">
+          <button id="btnSalvar" class="btn btn-success" onclick="CadastrarSala()"
+            data-dismiss="modal">Cadastrar</button>
+          <button id="btnCancelar" class="btn btn-warning" onclick="CancelarSala()">Cancelar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- salvarModalSala -->
+  <div class="modal fade" id="salvarModalSala" tabindex="-1" role="dialog" aria-labelledby="salvarModalSalaLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="salvarModalSalaLabel">Cadastrar Sala</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          "Nome é obrigatório!"
+        </div>
+        <div class="modal-footer">
+          <button id="btnCancelar" class="btn btn-warning" onclick="NovaSala();">OK</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- msgModalSala -->
+  <div class="modal fade" id="msgModalSala" tabindex="-1" role="dialog" aria-labelledby="msgModalSalaLabel"
+  aria-hidden="true">
+  <div class="modal-dialog" role="document">
+      <div class="modal-content">
+          <div class="modal-header">
+              <h5 class="modal-title" id="msgModalSalaLabel">Editar Sala</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+              </button>
+          </div>
+          <div class="modal-body">
+                  <h6 class="modal-dialog" id="msgModalSalaText"></h6>
+          </div>
+          <div class="modal-footer">
+              <button id="btnCancelar" class="btn btn-warning" data-dismiss="modal">OK</button>
+          </div>
+      </div>
+  </div>
+</div>
+  <!-- excluirModalSala -->
+  <div class="modal fade" id="excluirModalSala" tabindex="-1" role="dialog" aria-labelledby="excluirModalSalaLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="excluirModalSalaLabel">Excluir Sala</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <h5 class="modal-dialog" id="msgExlcuirModalLabel">Tem certeza que deseja excluir a sala?</h5>
+        </div>
+        <div class="modal-footer">
+          <button id="btnSalvar" class="btn btn-success" onclick="ConfirmarExlcusaoSala()"
+            data-dismiss="modal">Excluir</button>
+          <button id="btnCancelar" class="btn btn-warning" onclick="CancelarExclusaoSala()">Cancelar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script type="text/javascript" src="scripts/scriptSala.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="js/bootstrap.min.js"></script>
+  <script>
+    (() => {
+      var statusLogin = document.querySelector("#statusLogin");
+
+      if (sessionStorage.getItem('token') != null) {
+        statusLogin.innerHTML = `<li class="nav-item active">
+          <a class="nav-link" href="#" onclick="logout()">Sair <span class="sr-only">(current)</span></a>
+        </li>`;
+      } else {
+        statusLogin.innerHTML = `<li class="nav-item active">
+          <a class="nav-link" href="login.html">Entrar <span class="sr-only">(current)</span></a>
+        </li>`;
+
+        window.location.href = "login.html";
+      }
+    })()
+
+    function logout() {
+      sessionStorage.removeItem('token');
+      window.location.href = "login.html";
+    }
+  </script>
+</body>
+
+</html>
