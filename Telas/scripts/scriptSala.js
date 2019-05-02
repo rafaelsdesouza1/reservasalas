@@ -6,7 +6,9 @@ function CadastrarSala() {
     sala.Nome = document.querySelector('#Nome').value;
     sala.LocalId = document.querySelector('#LocalId').value;
 
-    if ((sala.Nome === undefined || sala.Nome == "") && (sala.id === undefined || sala.id == "")) {
+    if (((sala.LocalId === undefined || sala.LocalId == "")
+        || (sala.Nome === undefined || sala.Nome == "")) 
+    && (sala.id === undefined || sala.id == "")) {
         $('#salvarModalSala').modal('show');
     } else if (sala.Nome === undefined || sala.Nome == "") {
         var msg = document.querySelector('#msgModalSalaText');
@@ -46,7 +48,7 @@ function CarregarSalas() {
 }
 
 function CarregarLocais() {
-    tbody.innerHTML = '';
+    selectLocal.innerHTML = '';
 
     var xhr = new XMLHttpRequest();
 

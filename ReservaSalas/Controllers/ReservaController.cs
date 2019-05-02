@@ -52,14 +52,15 @@ namespace ReservaReservas.Controllers
             }
 
         }
-        
+
         [HttpGet]
-        public IHttpActionResult ValidarDisponibilidadeSala(ReservaDTO reserva)
+        [Route("ValidarDisponibilidadeSala/{id:int}")]
+        public IHttpActionResult ValidarDisponibilidadeSala(int id)
         {
             try
             {
                 ReservaDAO reservaDAO = new ReservaDAO();
-                return Ok(reservaDAO.ValidarDisponibilidadeSala(reserva));
+                return Ok(reservaDAO.ValidarDisponibilidadeSala(id, DateTime.Now, DateTime.Now));
             }
             catch (Exception ex)
             {
@@ -76,13 +77,19 @@ namespace ReservaReservas.Controllers
 
             try
             {
-                ReservaModel sl = new ReservaModel();
+                ReservaDAO reservaDAO = new ReservaDAO();
+                ReservaDTO reservaDTO = reservaDAO.ValidarDisponibilidadeSala(reserva.SalaId, reserva.DtHrIni, reserva.DtHrFim);
 
-                if (Id == 0)
-                    sl.Inserir(reserva);
-                else
-                    sl.Editar(reserva);
+                if (reservaDTO.Nome == null)
+                {
+                    ReservaModel sl = new ReservaModel();
 
+                    if (Id == 0)
+                        sl.Inserir(reserva);
+                    else
+                        sl.Editar(reserva);
+                }
+                
                 return Ok("Executado com sucesso!");
             }
             catch (Exception ex)

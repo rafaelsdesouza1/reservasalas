@@ -156,14 +156,14 @@ namespace ReservaSalas.Repository.DAO
             return reserva;
         }
 
-        public ReservaDTO ValidarDisponibilidadeSala(ReservaDTO reserva)
+        public ReservaDTO ValidarDisponibilidadeSala(int SalaId, DateTime DtHrIni, DateTime DtHrFim)
         {
-            var reservaRetorno = new ReservaDTO();
+            var reserva = new ReservaDTO();
 
             try
             {
                 IDbCommand command = conn.CreateCommand();
-                command.CommandText = $"select * from reservas where SalaId = {SalaId}";
+                command.CommandText = $"select * from reservas where SalaId = {SalaId} and ((DtHrIni between '{DtHrIni}' and '{DtHrFim}') or (DtHrFim between '{DtHrIni}' and '{DtHrFim}'))";
 
                 IDataReader res = command.ExecuteReader();
 

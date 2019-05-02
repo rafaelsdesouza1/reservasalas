@@ -6,13 +6,18 @@ var reserva = {};
 function CadastrarReserva() {
     reserva.SalaId = document.querySelector('#SalaId').value;
     reserva.Nome = document.querySelector('#Nome').value;
-    reserva.DtHrIni = document.querySelector('#DtHrIni').value;
-    reserva.DtHrFim = document.querySelector('#DtHrFim').value;
+    reserva.DtHrIni = document.querySelector('#DtHrIni').value + " " + document.querySelector('#DtHrIniHr').value;
+    reserva.DtHrFim = document.querySelector('#DtHrFim').value + " " + document.querySelector('#DtHrFimHr').value;
     reserva.Responsavel = document.querySelector('#Responsavel').value;
     reserva.Cafe = document.querySelector('#Cafe').value;
     reserva.QtdePessoas = document.querySelector('#QtdePessoas').value;
 
-    if ((reserva.Nome === undefined || reserva.Nome == "") && (reserva.id === undefined || reserva.id == "")) {
+    if (((reserva.SalaId === undefined || reserva.SalaId == "")
+        || (reserva.Nome === undefined || reserva.Nome == "")
+        || (reserva.DtHrIni === undefined || reserva.DtHrIni == "")
+        || (reserva.DtHrFim === undefined || reserva.DtHrFim == "")
+        || (reserva.Responsavel === undefined || reserva.Responsavel == ""))
+        && (reserva.id === undefined || reserva.id == "")) {
         $('#salvarModalReserva').modal('show');
     } else if (reserva.Nome === undefined || reserva.Nome == "") {
         var msg = document.querySelector('#msgModalReservaText');
@@ -52,7 +57,7 @@ function CarregarReservas() {
 }
 
 function CarregarLocais() {
-    tbody.innerHTML = '';
+    selectLocal.innerHTML = '';
 
     var xhr = new XMLHttpRequest();
 
@@ -76,12 +81,11 @@ function CarregarLocais() {
     xhr.send();
 }
 
-function CarregarSalas() {
-    tbody.innerHTML = '';
+function CarregarSalas(Id) {
+    selectSala.innerHTML = '';
 
     var xhr = new XMLHttpRequest();
-
-    xhr.open(`GET`, `http://localhost:55886/api/Sala/ListarSalas`, true);
+    xhr.open(`GET`, `http://localhost:55886/api/Sala/ListarSalasPorLocal/${Id}`, true);
     xhr.setRequestHeader('Authorization', sessionStorage.getItem('token'));
 
     xhr.onreadystatechange = function () {
@@ -102,11 +106,10 @@ function CarregarSalas() {
 }
 
 function SalvarReserva(Id, reserva) {
-    var xhr = new XMLHttpRequest();
+    ConfirmarReserva(Id);
+}
 
-    if (Id === undefined)
-        Id = 0;
-
+function ConfirmarReserva(Id) {
     xhr.open('PUT', `http://localhost:55886/api/Reserva/${Id}`, false);
     xhr.setRequestHeader('content-type', 'application/json');
     xhr.send(JSON.stringify(reserva));
@@ -196,6 +199,8 @@ function EditarReserva(reservaLinha) {
     btnSalvar.textContent = "Salvar";
     titulo.textContent = `Editar Reserva - ${reservaLinha.nome}`;
 
+    CarregarSalas(reservaLinha.sala.localId);
+
     document.querySelector('#LocalId').value = reservaLinha.sala.localId;
     document.querySelector('#SalaId').value = reservaLinha.salaId;
     document.querySelector('#Nome').value = reservaLinha.nome;
@@ -204,6 +209,7 @@ function EditarReserva(reservaLinha) {
     document.querySelector('#Responsavel').value = reservaLinha.responsavel;
     document.querySelector('#Cafe').value = reservaLinha.cafe;
     document.querySelector('#QtdePessoas').value = reservaLinha.qtdePessoas;
+
     reserva = reservaLinha;
 }
 
@@ -237,4 +243,3 @@ function AdicionarOptionSala(salaLinha) {
 
 CarregarReservas();
 CarregarLocais();
-CarregarSalas();

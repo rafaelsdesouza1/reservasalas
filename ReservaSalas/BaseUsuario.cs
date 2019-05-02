@@ -10,15 +10,7 @@ namespace ReservaSalas
             {
                 new Usuario
                 {
-                    Nome = "fulano", Senha = "123456"
-                },
-                new Usuario
-                {
-                    Nome = "fulano1", Senha = "123456"
-                },
-                new Usuario
-                {
-                    Nome = "fulano2", Senha = "123456"
+                    Nome = "labtrans", Senha = "123"
                 }
             };
         }

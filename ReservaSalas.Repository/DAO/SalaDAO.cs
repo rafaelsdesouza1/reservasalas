@@ -135,6 +135,39 @@ namespace ReservaSalas.Repository.DAO
             return sala;
         }
 
+        public List<SalaDTO> ListarSalasPorLocal(int LocalId)
+        {
+            var lstSalas = new List<SalaDTO>();
+            try
+            {
+                IDbCommand command = conn.CreateCommand();
+                command.CommandText = $"select * from salas where LocalId = {LocalId}";
+
+                IDataReader res = command.ExecuteReader();
+
+                while (res.Read())
+                {
+                    var sala = new SalaDTO
+                    {
+                        Id = Convert.ToInt32(res["Id"]),
+                        Nome = Convert.ToString(res["Nome"])
+                    };
+
+                    lstSalas.Add(sala);
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+            finally
+            {
+                conn.Close();
+            }
+
+            return lstSalas;
+        }
+
         public void InserirSala(SalaDTO sala)
         {
             try

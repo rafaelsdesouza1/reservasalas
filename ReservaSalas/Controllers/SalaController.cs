@@ -67,6 +67,22 @@ namespace ReservaSalas.Controllers
             
         }
 
+        [HttpGet]
+        [Route("ListarSalasPorLocal/{id:int}")]
+        public IHttpActionResult ListarSalasPorLocal(int id)
+        {
+            try
+            {
+                SalaDAO salaDAO = new SalaDAO();
+                return Ok(salaDAO.ListarSalasPorLocal(id));
+            }
+            catch (Exception ex)
+            {
+                return InternalServerError(ex);
+            }
+
+        }
+
         // PUT: api/Sala/5
         [HttpPut]
         public IHttpActionResult Put(int Id, SalaDTO sala)
