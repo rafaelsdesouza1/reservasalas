@@ -42,6 +42,11 @@ namespace ReservaSalas.Repository.DAO
                     {
                         Id = Convert.ToInt32(res["Id"]),
                         Nome = Convert.ToString(res["Nome"]),
+                        DtHrIni = Convert.ToDateTime(res["DtHrIni"]),
+                        DtHrFim = Convert.ToDateTime(res["DtHrFim"]),
+                        Responsavel = Convert.ToString(res["Responsavel"]),
+                        Cafe = Convert.ToBoolean(res["Cafe"]),
+                        QtdePessoas = Convert.ToInt32(res["QtdePessoas"]),
                         SalaId = 0
                     };
 
@@ -51,6 +56,11 @@ namespace ReservaSalas.Repository.DAO
                         {
                             Id = Convert.ToInt32(res["Id"]),
                             Nome = Convert.ToString(res["Nome"]),
+                            DtHrIni = Convert.ToDateTime(res["DtHrIni"]),
+                            DtHrFim = Convert.ToDateTime(res["DtHrFim"]),
+                            Responsavel = Convert.ToString(res["Responsavel"]),
+                            Cafe = Convert.ToBoolean(res["Cafe"]),
+                            QtdePessoas = Convert.ToInt32(res["QtdePessoas"]),
                             SalaId = SalaId,
                             Sala = new SalaDTO
                             {
@@ -91,6 +101,12 @@ namespace ReservaSalas.Repository.DAO
                 {
                     reserva.Id = Convert.ToInt32(res["Id"]);
                     reserva.Nome = Convert.ToString(res["Nome"]);
+                    reserva.DtHrIni = Convert.ToDateTime(res["DtHrIni"]);
+                    reserva.DtHrFim = Convert.ToDateTime(res["DtHrFim"]);
+                    reserva.Responsavel = Convert.ToString(res["Responsavel"]);
+                    reserva.Cafe = Convert.ToBoolean(res["Cafe"]);
+                    reserva.QtdePessoas = Convert.ToInt32(res["QtdePessoas"]);
+                    reserva.SalaId = Convert.ToInt32(res["SalaId"]);
                 }
             }
             catch (Exception ex)
@@ -120,6 +136,47 @@ namespace ReservaSalas.Repository.DAO
                 {
                     reserva.Id = Convert.ToInt32(res["Id"]);
                     reserva.Nome = Convert.ToString(res["Nome"]);
+                    reserva.DtHrIni = Convert.ToDateTime(res["DtHrIni"]);
+                    reserva.DtHrFim = Convert.ToDateTime(res["DtHrFim"]);
+                    reserva.Responsavel = Convert.ToString(res["Responsavel"]);
+                    reserva.Cafe = Convert.ToBoolean(res["Cafe"]);
+                    reserva.QtdePessoas = Convert.ToInt32(res["QtdePessoas"]);
+                    reserva.SalaId = Convert.ToInt32(res["SalaId"]);
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+            finally
+            {
+                conn.Close();
+            }
+
+            return reserva;
+        }
+
+        public ReservaDTO ValidarDisponibilidadeSala(ReservaDTO reserva)
+        {
+            var reservaRetorno = new ReservaDTO();
+
+            try
+            {
+                IDbCommand command = conn.CreateCommand();
+                command.CommandText = $"select * from reservas where SalaId = {SalaId}";
+
+                IDataReader res = command.ExecuteReader();
+
+                while (res.Read())
+                {
+                    reserva.Id = Convert.ToInt32(res["Id"]);
+                    reserva.Nome = Convert.ToString(res["Nome"]);
+                    reserva.DtHrIni = Convert.ToDateTime(res["DtHrIni"]);
+                    reserva.DtHrFim = Convert.ToDateTime(res["DtHrFim"]);
+                    reserva.Responsavel = Convert.ToString(res["Responsavel"]);
+                    reserva.Cafe = Convert.ToBoolean(res["Cafe"]);
+                    reserva.QtdePessoas = Convert.ToInt32(res["QtdePessoas"]);
+                    reserva.SalaId = Convert.ToInt32(res["SalaId"]);
                 }
             }
             catch (Exception ex)
@@ -139,10 +196,22 @@ namespace ReservaSalas.Repository.DAO
             try
             {
                 IDbCommand command = conn.CreateCommand();
-                command.CommandText = "insert into reservas (Nome) values (@Nome)";
+                command.CommandText = "insert into reservas (Nome, DtHrIni, DtHrFim, Responsavel, Cafe, QtdePessoas, SalaId) values (@Nome, @DtHrIni, @DtHrFim, @Responsavel, @Cafe, @QtdePessoas, @SalaId)";
 
                 IDbDataParameter Nome = new SqlParameter("Nome", reserva.Nome);
+                IDbDataParameter DtHrIni = new SqlParameter("DtHrIni", reserva.DtHrIni);
+                IDbDataParameter DtHrFim = new SqlParameter("DtHrFim", reserva.DtHrFim);
+                IDbDataParameter Responsavel = new SqlParameter("Responsavel", reserva.Responsavel);
+                IDbDataParameter Cafe = new SqlParameter("Cafe", reserva.Cafe);
+                IDbDataParameter QtdePessoas = new SqlParameter("QtdePessoas", reserva.QtdePessoas);
+                IDbDataParameter SalaId = new SqlParameter("SalaId", reserva.SalaId);
                 command.Parameters.Add(Nome);
+                command.Parameters.Add(DtHrIni);
+                command.Parameters.Add(DtHrFim);
+                command.Parameters.Add(Responsavel);
+                command.Parameters.Add(Cafe);
+                command.Parameters.Add(QtdePessoas);
+                command.Parameters.Add(SalaId);
 
                 command.ExecuteNonQuery();
             }
@@ -161,12 +230,24 @@ namespace ReservaSalas.Repository.DAO
             try
             {
                 IDbCommand command = conn.CreateCommand();
-                command.CommandText = "update Reservas set Nome = @Nome where Id = @Id";
+                command.CommandText = "update Reservas set Nome = @Nome, DtHrIni = @DtHrIni, DtHrFim = @DtHrFim, Responsavel = @Responsavel, Cafe = @Cafe, QtdePessoas = @QtdePessoas, SalaId = @SalaId where Id = @Id";
 
                 IDbDataParameter Id = new SqlParameter("Id", reserva.Id);
                 IDbDataParameter Nome = new SqlParameter("Nome", reserva.Nome);
+                IDbDataParameter DtHrIni = new SqlParameter("DtHrIni", reserva.DtHrIni);
+                IDbDataParameter DtHrFim = new SqlParameter("DtHrFim", reserva.DtHrFim);
+                IDbDataParameter Responsavel = new SqlParameter("Responsavel", reserva.Responsavel);
+                IDbDataParameter Cafe = new SqlParameter("Cafe", reserva.Cafe);
+                IDbDataParameter QtdePessoas = new SqlParameter("QtdePessoas", reserva.QtdePessoas);
+                IDbDataParameter SalaId = new SqlParameter("SalaId", reserva.SalaId);
                 command.Parameters.Add(Id);
                 command.Parameters.Add(Nome);
+                command.Parameters.Add(DtHrIni);
+                command.Parameters.Add(DtHrFim);
+                command.Parameters.Add(Responsavel);
+                command.Parameters.Add(Cafe);
+                command.Parameters.Add(QtdePessoas);
+                command.Parameters.Add(SalaId);
 
                 command.ExecuteNonQuery();
             }

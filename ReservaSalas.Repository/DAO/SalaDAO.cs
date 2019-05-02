@@ -90,6 +90,7 @@ namespace ReservaSalas.Repository.DAO
                 {
                     sala.Id = Convert.ToInt32(res["Id"]);
                     sala.Nome = Convert.ToString(res["Nome"]);
+                    sala.LocalId = Convert.ToInt32(res["LocalId"]);
                 }
             }
             catch (Exception ex)
@@ -119,6 +120,7 @@ namespace ReservaSalas.Repository.DAO
                 {
                     sala.Id = Convert.ToInt32(res["Id"]);
                     sala.Nome = Convert.ToString(res["Nome"]);
+                    sala.LocalId = Convert.ToInt32(res["LocalId"]);
                 }
             }
             catch (Exception ex)
@@ -138,10 +140,12 @@ namespace ReservaSalas.Repository.DAO
             try
             {
                 IDbCommand command = conn.CreateCommand();
-                command.CommandText = "insert into Salas (Nome) values (@Nome)";
+                command.CommandText = "insert into Salas (Nome, LocalId) values (@Nome, @LocalId)";
 
                 IDbDataParameter Nome = new SqlParameter("Nome", sala.Nome);
+                IDbDataParameter LocalId = new SqlParameter("LocalId", sala.LocalId);
                 command.Parameters.Add(Nome);
+                command.Parameters.Add(LocalId);
 
                 command.ExecuteNonQuery();
             }
@@ -160,12 +164,14 @@ namespace ReservaSalas.Repository.DAO
             try
             {
                 IDbCommand command = conn.CreateCommand();
-                command.CommandText = "update Salas set Nome = @Nome where Id = @Id";
+                command.CommandText = "update Salas set Nome = @Nome, LocalId = @LocalId where Id = @Id";
 
                 IDbDataParameter Id = new SqlParameter("Id", sala.Id);
                 IDbDataParameter Nome = new SqlParameter("Nome", sala.Nome);
+                IDbDataParameter LocalId = new SqlParameter("LocalId", sala.LocalId);
                 command.Parameters.Add(Id);
                 command.Parameters.Add(Nome);
+                command.Parameters.Add(LocalId);
 
                 command.ExecuteNonQuery();
             }

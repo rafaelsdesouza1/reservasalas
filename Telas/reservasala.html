@@ -47,8 +47,11 @@
     <table class="table table-striped">
       <thead>
         <tr>
-          <td>Sala</td>
-          <td>Descrição</td>
+          <td><strong>Sala</strong></td>
+          <td><strong>Descrição</strong></td>
+          <td><strong>Data/Hora Ini</strong></td>
+          <td><strong>Data/Hora Fim</strong></td>
+          <td><strong>Responsável</strong></td>
           <td></td>
         </tr>
       </thead>
@@ -70,7 +73,11 @@
           <div class="form-group"><label>Local/Filial:</label><select id="LocalId" class="form-control"></select></div>
           <div class="form-group"><label>Sala:</label><select id="SalaId" class="form-control"></select></div>
           <div class="form-group"><label>Descrição:</label><input type="text" id="Nome" class="form-control" /></div>
+          <div class="form-group"><label>Data/Hora Ini:</label><input type="text" id="DtHrIni" class="form-control" /></div>
+          <div class="form-group"><label>Data/Hora Fim:</label><input type="text" id="DtHrFim" class="form-control" /></div>
           <div class="form-group"><label>Responsável:</label><input type="text" id="Responsavel" class="form-control" /></div>
+          <div class="form-group"><label>Café:</label><input type="text" id="Cafe" class="form-control" /></div>
+          <div class="form-group"><label>Qtde Pessoas:</label><input type="text" id="QtdePessoas" class="form-control" /></div>
         </div>
         <div class="modal-footer">
           <button id="btnSalvar" class="btn btn-success" onclick="CadastrarReserva()"

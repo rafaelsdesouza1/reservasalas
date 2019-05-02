@@ -4,9 +4,13 @@ var selectSala = document.querySelector('#SalaId');
 var reserva = {};
 
 function CadastrarReserva() {
-    reserva.Nome = document.querySelector('#Nome').value;
     reserva.SalaId = document.querySelector('#SalaId').value;
+    reserva.Nome = document.querySelector('#Nome').value;
+    reserva.DtHrIni = document.querySelector('#DtHrIni').value;
+    reserva.DtHrFim = document.querySelector('#DtHrFim').value;
     reserva.Responsavel = document.querySelector('#Responsavel').value;
+    reserva.Cafe = document.querySelector('#Cafe').value;
+    reserva.QtdePessoas = document.querySelector('#QtdePessoas').value;
 
     if ((reserva.Nome === undefined || reserva.Nome == "") && (reserva.id === undefined || reserva.id == "")) {
         $('#salvarModalReserva').modal('show');
@@ -129,7 +133,6 @@ function ConfirmarExlcusaoReserva() {
 
 function NovaReserva() {
     var btnSalvar = document.querySelector('#btnSalvar');
-    var btnCancelar = document.querySelector('#btnCancelar');
     var titulo = document.querySelector('#cadastrarModalReservaLabel');
     btnSalvar.textContent = "Cadastrar";
     titulo.textContent = "Cadastrar Reserva";
@@ -137,7 +140,11 @@ function NovaReserva() {
     document.querySelector('#LocalId').value = "";
     document.querySelector('#SalaId').value = "";
     document.querySelector('#Nome').value = "";
+    document.querySelector('#DtHrIni').value = "";
+    document.querySelector('#DtHrFim').value = "";
     document.querySelector('#Responsavel').value = "";
+    document.querySelector('#Cafe').value = "";
+    document.querySelector('#QtdePessoas').value = "";
 
     reserva = {};
     $('#salvarModalReserva').modal('hide');
@@ -146,7 +153,6 @@ function NovaReserva() {
 
 function CancelarReserva() {
     var btnSalvar = document.querySelector('#btnSalvar');
-    var btnCancelar = document.querySelector('#btnCancelar');
     var titulo = document.querySelector('#cadastrarModalReservaLabel');
     btnSalvar.textContent = "Cadastrar";
     titulo.textContent = "Cadastrar Reserva";
@@ -154,14 +160,18 @@ function CancelarReserva() {
     document.querySelector('#LocalId').value = "";
     document.querySelector('#SalaId').value = "";
     document.querySelector('#Nome').value = "";
+    document.querySelector('#DtHrIni').value = "";
+    document.querySelector('#DtHrFim').value = "";
     document.querySelector('#Responsavel').value = "";
+    document.querySelector('#Cafe').value = "";
+    document.querySelector('#QtdePessoas').value = "";
+
     reserva = {};
     $('#cadastrarModalReserva').modal('hide');
 }
 
 function CancelarExclusaoReserva() {
     var btnSalvar = document.querySelector('#btnSalvar');
-    var btnCancelar = document.querySelector('#btnCancelar');
     var titulo = document.querySelector('#cadastrarModalReservaLabel');
     btnSalvar.textContent = "Cadastrar";
     titulo.textContent = "Cadastrar Reserva";
@@ -169,23 +179,31 @@ function CancelarExclusaoReserva() {
     document.querySelector('#LocalId').value = "";
     document.querySelector('#SalaId').value = "";
     document.querySelector('#Nome').value = "";
+    document.querySelector('#DtHrIni').value = "";
+    document.querySelector('#DtHrFim').value = "";
     document.querySelector('#Responsavel').value = "";
+    document.querySelector('#Cafe').value = "";
+    document.querySelector('#QtdePessoas').value = "";
+
     reserva = {};
     $('#excluirModalReserva').modal('hide');
 }
 
 function EditarReserva(reservaLinha) {
-    $('#cadastrarModalSala').modal('show');
+    $('#cadastrarModalReserva').modal('show');
     var btnSalvar = document.querySelector('#btnSalvar');
-    var btnCancelar = document.querySelector('#btnCancelar');
     var titulo = document.querySelector('#cadastrarModalReservaLabel');
     btnSalvar.textContent = "Salvar";
     titulo.textContent = `Editar Reserva - ${reservaLinha.nome}`;
 
-    document.querySelector('#LocalId').value = reservaLinha.nome;
-    document.querySelector('#SalaId').value = reservaLinha.nome;
+    document.querySelector('#LocalId').value = reservaLinha.sala.localId;
+    document.querySelector('#SalaId').value = reservaLinha.salaId;
     document.querySelector('#Nome').value = reservaLinha.nome;
-    document.querySelector('#Responsavel').value = reservaLinha.nome;
+    document.querySelector('#DtHrIni').value = reservaLinha.dtHrIni;
+    document.querySelector('#DtHrFim').value = reservaLinha.dtHrFim;
+    document.querySelector('#Responsavel').value = reservaLinha.responsavel;
+    document.querySelector('#Cafe').value = reservaLinha.cafe;
+    document.querySelector('#QtdePessoas').value = reservaLinha.qtdePessoas;
     reserva = reservaLinha;
 }
 
@@ -193,6 +211,8 @@ function AdicionarLinhaReserva(reservaLinha) {
     var tr = `<tr>
                 <td>${reservaLinha.sala.nome}</td>
                 <td>${reservaLinha.nome}</td>
+                <td>${reservaLinha.dtHrIni}</td>
+                <td>${reservaLinha.dtHrFim}</td>
                 <td>${reservaLinha.responsavel}</td>
                 <td>
                     <button class='btn btn-info' onclick='EditarReserva(${JSON.stringify(reservaLinha)});'>Editar</button>

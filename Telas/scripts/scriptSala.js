@@ -103,7 +103,7 @@ function ConfirmarExlcusaoSala() {
             if (this.status == 200) {
                 var reserva = JSON.parse(this.responseText);
 
-                if (sala.nome == null) {
+                if (reserva.nome == null) {
                     ExcluirSala();
                     CarregarSalas();
                 } else {
@@ -121,7 +121,6 @@ function ConfirmarExlcusaoSala() {
 
 function NovaSala() {
     var btnSalvar = document.querySelector('#btnSalvar');
-    var btnCancelar = document.querySelector('#btnCancelar');
     var titulo = document.querySelector('#cadastrarModalSalaLabel');
     btnSalvar.textContent = "Cadastrar";
     titulo.textContent = "Cadastrar Sala";
@@ -136,24 +135,26 @@ function NovaSala() {
 
 function CancelarSala() {
     var btnSalvar = document.querySelector('#btnSalvar');
-    var btnCancelar = document.querySelector('#btnCancelar');
     var titulo = document.querySelector('#cadastrarModalSalaLabel');
     btnSalvar.textContent = "Cadastrar";
     titulo.textContent = "Cadastrar Sala";
 
+    document.querySelector('#LocalId').value = "";
     document.querySelector('#Nome').value = "";
+    
     sala = {};
     $('#cadastrarModalSala').modal('hide');
 }
 
 function CancelarExclusaoSala() {
     var btnSalvar = document.querySelector('#btnSalvar');
-    var btnCancelar = document.querySelector('#btnCancelar');
     var titulo = document.querySelector('#cadastrarModalSalaLabel');
     btnSalvar.textContent = "Cadastrar";
     titulo.textContent = "Cadastrar Sala";
 
+    document.querySelector('#LocalId').value = "";
     document.querySelector('#Nome').value = "";
+
     sala = {};
     $('#excluirModalSala').modal('hide');
 }
@@ -161,11 +162,11 @@ function CancelarExclusaoSala() {
 function EditarSala(salaLinha) {
     $('#cadastrarModalSala').modal('show');
     var btnSalvar = document.querySelector('#btnSalvar');
-    var btnCancelar = document.querySelector('#btnCancelar');
     var titulo = document.querySelector('#cadastrarModalSalaLabel');
     btnSalvar.textContent = "Salvar";
     titulo.textContent = `Editar Sala - ${salaLinha.nome}`;
 
+    document.querySelector('#LocalId').value = salaLinha.localId;
     document.querySelector('#Nome').value = salaLinha.nome;
     sala = salaLinha;
 }

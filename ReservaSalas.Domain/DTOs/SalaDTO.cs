@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace ReservaSalas.Domain.DTOs
 {
@@ -14,5 +15,7 @@ namespace ReservaSalas.Domain.DTOs
         public int LocalId { get; set; }
 
         public virtual LocalDTO Local { get; set; }
+
+        public virtual ICollection<ReservaDTO> Reservas { get; set; }
     }
 }

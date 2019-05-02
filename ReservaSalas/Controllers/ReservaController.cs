@@ -28,26 +28,10 @@ namespace ReservaReservas.Controllers
             }
         }
 
-        [HttpGet]
-        [Route(@"RecuperarReservaPorData/{data:regex({0-9}{4}\-{0-9}{2})}/{id:int}")]
-        public IHttpActionResult ListarReservasPorData(string data)
-        {
-            try
-            {
-                ReservaDAO reservaDAO = new ReservaDAO();
-                //List<Reserva> lstReservas = ListarReservas1().Where(x => x.data == data).ToList();
-                return Ok(reservaDAO.ListarReservas());
-            }
-            catch (Exception ex)
-            {
-                return InternalServerError(ex);
-            }
-        }
-
         // GET: api/Reserva/5
         [HttpGet]
-        [Route("RecuperarReserva/{id:int}")]
-        public ReservaDTO RecuperarReserva(int id)
+        [Route("ListarReserva/{id:int}")]
+        public ReservaDTO ListarReserva(int id)
         {
             ReservaDAO reservaDAO = new ReservaDAO();
             return reservaDAO.ListarReserva(id);
@@ -55,7 +39,6 @@ namespace ReservaReservas.Controllers
 
         [HttpGet]
         [Route("ListarReservaPorSala/{id:int}")]
-        [Authorize]
         public IHttpActionResult ListarReservaPorSala(int id)
         {
             try
@@ -69,13 +52,19 @@ namespace ReservaReservas.Controllers
             }
 
         }
-
+        
         [HttpGet]
-        [Route(@"RecuperarReservaPorData/{data:regex({0-9}{4}\-{0-9}{2})}/{id:int}")]
-        public ReservaDTO RecuperarReservaPorData(int id)
+        public IHttpActionResult ValidarDisponibilidadeSala(ReservaDTO reserva)
         {
-            ReservaDAO reservaDAO = new ReservaDAO();
-            return reservaDAO.ListarReservas().Where(x => x.Id == id).FirstOrDefault();
+            try
+            {
+                ReservaDAO reservaDAO = new ReservaDAO();
+                return Ok(reservaDAO.ValidarDisponibilidadeSala(reserva));
+            }
+            catch (Exception ex)
+            {
+                return InternalServerError(ex);
+            }
         }
 
         // PUT: api/Reserva/5
