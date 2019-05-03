@@ -163,7 +163,9 @@ namespace ReservaSalas.Repository.DAO
             try
             {
                 IDbCommand command = conn.CreateCommand();
-                command.CommandText = $"select * from reservas where SalaId = {SalaId} and ((DtHrIni between '{DtHrIni}' and '{DtHrFim}') or (DtHrFim between '{DtHrIni}' and '{DtHrFim}'))";
+                var DtIni = String.Format("{0:yyyy-MM-dd HH:mm:ss}", DtHrIni);
+                var DtFim = String.Format("{0:yyyy-MM-dd HH:mm:ss}", DtHrFim);
+                command.CommandText = $"select * from reservas where SalaId = {SalaId} and ((DtHrIni between '{DtIni}' and '{DtFim}') or (DtHrFim between '{DtIni}' and '{DtFim}'))";
 
                 IDataReader res = command.ExecuteReader();
 

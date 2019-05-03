@@ -10,7 +10,7 @@ namespace ReservaSalas
             {
                 new Usuario
                 {
-                    Nome = "labtrans", Senha = "123"
+                    Nome = "labtrans@teste.com.br", Senha = "123"
                 }
             };
         }

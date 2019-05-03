@@ -54,13 +54,18 @@ namespace ReservaReservas.Controllers
         }
 
         [HttpGet]
-        [Route("ValidarDisponibilidadeSala/{id:int}")]
-        public IHttpActionResult ValidarDisponibilidadeSala(int id)
+        [Route("ValidarDisponibilidadeSala/{id}/{DtIni}/{HrIni}/{DtFim}/{HrFim}")]
+        [Authorize]
+        public IHttpActionResult ValidarDisponibilidadeSala(int id, string DtIni, string HrIni, string DtFim, string HrFim)
         {
             try
             {
+                var HrIniRpl = HrIni.Replace("-", ":");
+                var HrFimRpl = HrFim.Replace("-", ":");
+                DateTime DtHrIni = Convert.ToDateTime(DtIni + " " + HrIniRpl);
+                DateTime DtHrFim = Convert.ToDateTime(DtFim + " " + HrFimRpl);
                 ReservaDAO reservaDAO = new ReservaDAO();
-                return Ok(reservaDAO.ValidarDisponibilidadeSala(id, DateTime.Now, DateTime.Now));
+                return Ok(reservaDAO.ValidarDisponibilidadeSala(id, DtHrIni, DtHrFim));
             }
             catch (Exception ex)
             {

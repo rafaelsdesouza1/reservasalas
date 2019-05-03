@@ -15,9 +15,9 @@
         <form class="form-signin" onsubmit="login()">
             <h1 class="h3 mb-3 font-weight-normal">Reserva de Salas</h1>
             <label for="email" class="sr-only">E-mail</label>
-            <input type="text" id="inputEmail" class="form-control" placeholder="E-mail" required="" autofocus="">
+            <input type="text" id="nome" class="form-control" placeholder="E-mail" required="" autofocus="">
             <label for="password" class="sr-only">Senha</label>
-            <input type="password" id="inputPassword" class="form-control" placeholder="Senha" required="">
+            <input type="password" id="password" class="form-control" placeholder="Senha" required="">
             <div class="checkbox mb-3">
                 <label>
                     <input type="checkbox" value="Lembre-me"> Lembre-me
@@ -27,6 +27,28 @@
             <p class="mt-5 mb-3 text-muted">© 2017-2019</p>
         </form>
     </div>
+    <!-- msgModalLogin -->
+    <div class="modal fade" id="msgModalLogin" tabindex="-1" role="dialog" aria-labelledby="msgModalLoginLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="msgModalLoginLabel">Dados de Acesso</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <h6 class="modal-dialog" id="msgModalLoginText"></h6>
+                </div>
+                <div class="modal-footer">
+                    <button id="btnCancelar" class="btn btn-warning" data-dismiss="modal">OK</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
     <script>
         (() => {
             if (sessionStorage.getItem('token') != null) {
@@ -37,8 +59,8 @@
         var login = function () {
             event.preventDefault();
 
-            var nome = document.querySelector('email');
-            var password = document.querySelector('passdword');
+            var nome = document.querySelector('#nome');
+            var password = document.querySelector('#password');
 
             var xhr = new XMLHttpRequest();
             xhr.open('POST', 'http:localhost:55886/token', true);
@@ -46,11 +68,20 @@
 
             xhr.onload = function () {
                 var res = JSON.parse(this.responseText);
-                sessionStorage.setItem('token', `${res.token_type} ${res.access_token}`)
-                verificar();
+
+                if (res.error != "invalid_grant") {
+                    sessionStorage.setItem('token', `${res.token_type} ${res.access_token}`)
+                    verificar();
+                } else {
+                    nome.value = "";
+                    password.value = "";
+                    var msg = document.querySelector('#msgModalLoginText');
+                    msg.textContent = `Dados de acesso incorretos!`;
+                    $('#msgModalLogin').modal('show');
+                }
             }
 
-            xhr.send(`grant_type=password&username=${nome}&password=${password}`);
+            xhr.send(`grant_type=password&username=${nome.value}&password=${password.value}`);
         }
 
         var verificar = function () {

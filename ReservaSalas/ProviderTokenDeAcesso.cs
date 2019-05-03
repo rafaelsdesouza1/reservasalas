@@ -19,9 +19,11 @@ namespace ReservaSalas
 
             if (usuario == null)
                 context.SetError("invalid_grant", "Login não efetuado");
-
-            var IdentidadeUsuario = new ClaimsIdentity(context.Options.AuthenticationType);
-            context.Validated(IdentidadeUsuario);
+            else
+            {
+                var IdentidadeUsuario = new ClaimsIdentity(context.Options.AuthenticationType);
+                context.Validated(IdentidadeUsuario);
+            }
         }
     }
 }

@@ -24,10 +24,12 @@ function CadastrarReserva() {
         msg.textContent = `Nome é obrigatório!`;
         $('#msgModalReserva').modal('show');
     } else {
-        SalvarReserva(reserva.id, reserva);
+        var HrIni = document.querySelector('#DtHrIniHr').value;
+        var HrFim = document.querySelector('#DtHrFimHr').value;
+        var HrIniRpl = HrIni.replace(":", "-");
+        var HrFimRpl = HrFim.replace(":", "-");
+        ValidarDisponibilidadeSala(reserva.id, reserva.SalaId, document.querySelector('#DtHrIni').value, HrIniRpl, document.querySelector('#DtHrFim').value, HrFimRpl);
         $('#cadastrarModalReserva').modal('hide');
-
-        CarregarReservas();
     }
 }
 
@@ -105,14 +107,46 @@ function CarregarSalas(Id) {
     xhr.send();
 }
 
-function SalvarReserva(Id, reserva) {
-    ConfirmarReserva(Id);
+function ValidarDisponibilidadeSala(Id, SalaId, DtIni, HrIni, DtFim, HrFim) {
+    var xhr = new XMLHttpRequest();
+    xhr.open(`GET`, `http://localhost:55886/api/Reserva/ValidarDisponibilidadeSala/${SalaId}/${DtIni}/${HrIni}/${DtFim}/${HrFim}`, true);
+    xhr.setRequestHeader('Authorization', sessionStorage.getItem('token'));
+
+    xhr.onreadystatechange = function () {
+        if (this.readyState == 4) {
+            if (this.status == 200) {
+                var ReservaChoque = JSON.parse(this.responseText);
+
+                if (ReservaChoque.nome == null) {
+                    SalvarReserva(reserva.id, reserva);
+                } else {
+                    var msg = document.querySelector('#msgModalReservaText');
+                    msg.textContent = `Reserva não cadastrada por choque de horário.`;
+                    $('#msgModalReserva').modal('show');
+                }
+            } else if (this.status == 500) {
+                var erro = JSON.parse(this.responseText);
+            }
+        }
+    }
+
+    xhr.send();
 }
 
-function ConfirmarReserva(Id) {
+function SalvarReserva(Id, reserva) {
+    var xhr = new XMLHttpRequest();
+
+    if (Id === undefined)
+        Id = 0;
+
+    if (reserva.QtdePessoas === undefined || reserva.QtdePessoas == null || reserva.QtdePessoas == "")
+        reserva.QtdePessoas = 0;
+
     xhr.open('PUT', `http://localhost:55886/api/Reserva/${Id}`, false);
     xhr.setRequestHeader('content-type', 'application/json');
     xhr.send(JSON.stringify(reserva));
+
+    CarregarReservas();
 }
 
 function ExcluirReserva() {
