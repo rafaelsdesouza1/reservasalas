@@ -10,9 +10,10 @@ function CadastrarSala() {
         || (sala.Nome === undefined || sala.Nome == "")) 
     && (sala.id === undefined || sala.id == "")) {
         $('#salvarModalSala').modal('show');
-    } else if (sala.Nome === undefined || sala.Nome == "") {
+    } else if ((sala.LocalId === undefined || sala.LocalId == "")
+    || (sala.Nome === undefined || sala.Nome == "")) {
         var msg = document.querySelector('#msgModalSalaText');
-        msg.textContent = `Nome é obrigatório!`;
+        msg.textContent = `Preencha os dados obrigatórios!`;
         $('#msgModalSala').modal('show');
     } else {
         SalvarSala(sala.id, sala);

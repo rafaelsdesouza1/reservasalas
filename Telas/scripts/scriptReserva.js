@@ -19,15 +19,19 @@ function CadastrarReserva() {
         || (reserva.Responsavel === undefined || reserva.Responsavel == ""))
         && (reserva.id === undefined || reserva.id == "")) {
         $('#salvarModalReserva').modal('show');
-    } else if (reserva.Nome === undefined || reserva.Nome == "") {
+    } else if ((reserva.SalaId === undefined || reserva.SalaId == "")
+        || (reserva.Nome === undefined || reserva.Nome == "")
+        || (reserva.DtHrIni === undefined || reserva.DtHrIni == "")
+        || (reserva.DtHrFim === undefined || reserva.DtHrFim == "")
+        || (reserva.Responsavel === undefined || reserva.Responsavel == "")) {
         var msg = document.querySelector('#msgModalReservaText');
-        msg.textContent = `Nome é obrigatório!`;
+        msg.textContent = `Preencha os dados obrigatórios!`;
         $('#msgModalReserva').modal('show');
     } else {
         var HrIni = document.querySelector('#DtHrIniHr').value;
         var HrFim = document.querySelector('#DtHrFimHr').value;
-        var HrIniRpl = HrIni.replace(":", "-");
-        var HrFimRpl = HrFim.replace(":", "-");
+        var HrIniRpl = HrIni.replace(":", "-").replace(":", "-");
+        var HrFimRpl = HrFim.replace(":", "-").replace(":", "-");
         ValidarDisponibilidadeSala(reserva.id, reserva.SalaId, document.querySelector('#DtHrIni').value, HrIniRpl, document.querySelector('#DtHrFim').value, HrFimRpl);
         $('#cadastrarModalReserva').modal('hide');
     }
@@ -179,6 +183,8 @@ function NovaReserva() {
     document.querySelector('#Nome').value = "";
     document.querySelector('#DtHrIni').value = "";
     document.querySelector('#DtHrFim').value = "";
+    document.querySelector('#DtHrIniHr').value = "";
+    document.querySelector('#DtHrFimHr').value = "";
     document.querySelector('#Responsavel').value = "";
     document.querySelector('#Cafe').value = "";
     document.querySelector('#QtdePessoas').value = "";
@@ -199,6 +205,8 @@ function CancelarReserva() {
     document.querySelector('#Nome').value = "";
     document.querySelector('#DtHrIni').value = "";
     document.querySelector('#DtHrFim').value = "";
+    document.querySelector('#DtHrIniHr').value = "";
+    document.querySelector('#DtHrFimHr').value = "";
     document.querySelector('#Responsavel').value = "";
     document.querySelector('#Cafe').value = "";
     document.querySelector('#QtdePessoas').value = "";
@@ -218,6 +226,8 @@ function CancelarExclusaoReserva() {
     document.querySelector('#Nome').value = "";
     document.querySelector('#DtHrIni').value = "";
     document.querySelector('#DtHrFim').value = "";
+    document.querySelector('#DtHrIniHr').value = "";
+    document.querySelector('#DtHrFimHr').value = "";
     document.querySelector('#Responsavel').value = "";
     document.querySelector('#Cafe').value = "";
     document.querySelector('#QtdePessoas').value = "";
@@ -234,12 +244,16 @@ function EditarReserva(reservaLinha) {
     titulo.textContent = `Editar Reserva - ${reservaLinha.nome}`;
 
     CarregarSalas(reservaLinha.sala.localId);
+    var DtHrI = reservaLinha.dtHrIni.split("T");
+    var DtHrF = reservaLinha.dtHrFim.split("T");
 
     document.querySelector('#LocalId').value = reservaLinha.sala.localId;
     document.querySelector('#SalaId').value = reservaLinha.salaId;
     document.querySelector('#Nome').value = reservaLinha.nome;
-    document.querySelector('#DtHrIni').value = reservaLinha.dtHrIni;
-    document.querySelector('#DtHrFim').value = reservaLinha.dtHrFim;
+    document.querySelector('#DtHrIni').value = DtHrI[0];
+    document.querySelector('#DtHrFim').value = DtHrF[0];
+    document.querySelector('#DtHrIniHr').value = DtHrI[1];
+    document.querySelector('#DtHrFimHr').value = DtHrF[1];
     document.querySelector('#Responsavel').value = reservaLinha.responsavel;
     document.querySelector('#Cafe').value = reservaLinha.cafe;
     document.querySelector('#QtdePessoas').value = reservaLinha.qtdePessoas;

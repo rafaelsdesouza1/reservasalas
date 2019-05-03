@@ -23,3 +23,11 @@
 	<br />E-mail = "labtrans@teste.com.br"
 	<br />Senha = "123"
 </p>
+<p>
+	Crie um banco com o nome ReservaSalasBD e crie as tabelas:
+	<br />Locais
+	<br />Salas
+	<br />Reservas
+	<br />
+	<br />O script para a criação das tabelas está no arquivo DBTeste.sql.
+</p>
